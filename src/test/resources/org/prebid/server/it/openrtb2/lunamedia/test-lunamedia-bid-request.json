@@ -36,7 +36,7 @@
     "ifa": "ifaId"
   },
   "user": {
-    "buyeruid" : "LM-UID",
+    "buyeruid": "LM-UID",
     "ext": {
       "consent": "consentValue",
       "digitrust": {

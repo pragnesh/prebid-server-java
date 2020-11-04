@@ -37,7 +37,7 @@
     "ifa": "ifaId"
   },
   "user": {
-    "buyeruid" : "BTW-UID"
+    "buyeruid": "BTW-UID"
   },
   "at": 1,
   "tmax": 5000,
@@ -72,8 +72,8 @@
         "bids": {}
       },
       "auctiontimestamp": 1000,
-      "channel" : {
-        "name" : "web"
+      "channel": {
+        "name": "web"
       }
     }
   }

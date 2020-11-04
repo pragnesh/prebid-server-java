@@ -83,7 +83,7 @@
   },
   "user": {
     "ext": {
-      "consent" : "consentValue",
+      "consent": "consentValue",
       "digitrust": {
         "id": "id",
         "keyv": 123,
