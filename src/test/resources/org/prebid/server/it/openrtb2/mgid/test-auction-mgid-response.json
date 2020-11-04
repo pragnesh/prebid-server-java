@@ -38,7 +38,8 @@
             },
             "bidder": {
               "crtype": "banner"
-            }
+            },
+            "origbidcpm": 3.5
           }
         }
       ],
