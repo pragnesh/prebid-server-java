@@ -95,6 +95,8 @@ public class BidResponseCreator {
 
     private static final String CACHE = "cache";
     private static final String PREBID_EXT = "prebid";
+    private static final String ORIGINAL_BID_CPM = "origbidcpm";
+    private static final String ORIGINAL_BID_CURRENCY = "origbidcur";
 
     private final CacheService cacheService;
     private final BidderCatalog bidderCatalog;
@@ -858,6 +860,16 @@ public class BidResponseCreator {
 
         final ExtPrebid<ExtBidPrebid, ObjectNode> bidExt = ExtPrebid.of(extBidPrebid, bid.getExt());
         bid.setExt(mapper.mapper().valueToTree(bidExt));
+
+        final BigDecimal originalBidPrice = bid.getPrice();
+        if (Objects.nonNull(originalBidPrice)) {
+            bid.getExt().put(ORIGINAL_BID_CPM, originalBidPrice);
+        }
+
+        final String originalBidCurrency = bidderBid.getBidCurrency();
+        if (StringUtils.isNotBlank(originalBidCurrency)) {
+            bid.getExt().put(ORIGINAL_BID_CURRENCY, originalBidCurrency);
+        }
 
         final Integer ttl = cacheInfo != null ? ObjectUtils.max(cacheInfo.getTtl(), cacheInfo.getVideoTtl()) : null;
         bid.setExp(ttl);

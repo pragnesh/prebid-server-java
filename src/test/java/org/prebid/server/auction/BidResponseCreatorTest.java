@@ -507,6 +507,11 @@ public class BidResponseCreatorTest extends VertxTest {
         final BidResponse bidResponse =
                 bidResponseCreator.create(bidderResponses, auctionContext, CACHE_INFO, false).result();
 
+        final ObjectNode bidExt = mapper.valueToTree(ExtPrebid.of(ExtBidPrebid.builder().type(banner).build(),
+                singletonMap("bidExt", 1)));
+        bidExt.put("origbidcpm", BigDecimal.ONE);
+        bidExt.put("origbidcur", "USD");
+
         // then
         assertThat(bidResponse.getSeatbid()).containsOnly(SeatBid.builder()
                 .seat("bidder1")
@@ -516,9 +521,7 @@ public class BidResponseCreatorTest extends VertxTest {
                         .impid("i1")
                         .price(BigDecimal.ONE)
                         .adm("adm")
-                        .ext(mapper.valueToTree(ExtPrebid.of(
-                                ExtBidPrebid.builder().type(banner).build(),
-                                singletonMap("bidExt", 1))))
+                        .ext(bidExt)
                         .build()))
                 .build());
 
@@ -844,6 +847,10 @@ public class BidResponseCreatorTest extends VertxTest {
         final BidResponse bidResponse =
                 bidResponseCreator.create(bidderResponses, auctionContext, CACHE_INFO, false).result();
 
+        final ObjectNode bidExt = mapper.valueToTree(
+                ExtPrebid.of(ExtBidPrebid.builder().type(banner).build(), null));
+        bidExt.put("origbidcpm", BigDecimal.ONE);
+        bidExt.put("origbidcur", "USD");
         // then
         assertThat(bidResponse.getSeatbid()).hasSize(1)
                 .flatExtracting(SeatBid::getBid)
@@ -851,8 +858,7 @@ public class BidResponseCreatorTest extends VertxTest {
                         .id("bidId")
                         .impid("i1")
                         .price(BigDecimal.ONE)
-                        .ext(mapper.valueToTree(
-                                ExtPrebid.of(ExtBidPrebid.builder().type(banner).build(), null)))
+                        .ext(bidExt)
                         .build());
 
         verify(cacheService, never()).cacheBidsOpenrtb(anyList(), any(), any(), any());

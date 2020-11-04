@@ -21,7 +21,8 @@
             "bidder": {
               "avocet": {
                 "duration": 30
-              }
+              },
+              "origbidcpm": 0.5
             },
             "prebid": {
               "type": "video",
